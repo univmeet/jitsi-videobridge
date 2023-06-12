@@ -3,6 +3,10 @@
 ## 构建步骤
 
 ```bash
+# 确保设置了以下环境变量，例如：
+# export DEBFULLNAME="Jitsi Team"
+# export DEBEMAIL="dev@jitsi.org"
+
 # 添加Debian源
 vi /etc/apt/sources.list
 deb http://cz.archive.ubuntu.com/ubuntu focal main universe
