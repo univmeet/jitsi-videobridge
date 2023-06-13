@@ -1,34 +1,49 @@
 #!/usr/bin/make -f
 
-# Uncomment this to turn on verbose mode.
-#export DH_VERBOSE=1
-#export DEB_VERBOSE_ALL=true
+# 去掉注释，开打详细信息模式
+# export DH_VERBOSE=1
+# export DEB_VERBOSE_ALL=true
 
 %:
 	dh $@
 
 override_dh_auto_clean:
+    # 构建后自动清理
 	mvn -Dmaven.repo.local=${HOME}/.m2/repository clean
 
 override_dh_auto_configure:
-	# do nothing
+	# 什么都不做
 
 override_dh_auto_test:
-	# do nothing
+	# 什么都不做
 
 override_dh_auto_build:
+    # 自动构建安装包：
+    # 安装到本地仓库
+    # 复制运行时依赖包
 	mvn -Dmaven.repo.local=${HOME}/.m2/repository -DskipTests -Dassembly.skipAssembly=true install
 	mvn -Dmaven.repo.local=${HOME}/.m2/repository dependency:copy-dependencies -DincludeScope=runtime
 
 override_dh_install:
+	# 复制文件：
+	# config/logrotate                  > debian/tmp/jitsi-videobridge     > etc/logrotate.d
+	# jvb/target/jitsi-videobridge*.jar > debian/tmp/jitsi-videobridge.jar > usr/share/jitsi-videobridge
 	mkdir debian/tmp
 	cp config/logrotate debian/tmp/jitsi-videobridge
 	cp jvb/target/jitsi-videobridge*.jar debian/tmp/jitsi-videobridge.jar
+	# 把文件安装到安装到安装包构建目录中：
+	# 执行debian/install
+    # debian/README.Debian > usr/share/doc/jitsi-videobridge2/README.Debian
+    # debian/changelog     > usr/share/doc/jitsi-videobridge2/changelog.Debian.gz
+    # debian/copyright     > usr/share/doc/jitsi-videobridge2/copyright
 	dh_install
 
 override_dh_installinit:
+    # 把服务初始化文件安装到安装包构建目录中：debian/init.d > etc/init.d/jitsi-videobridge2
 	dh_installinit --noscripts
 
 override_dh_auto_install:
+    # 自动运行make install
 	dh_auto_install
+	# 安装systemd单元文件：debian/jitsi-videobridge2.service > lib/systemd/system/jitsi-videobridge2.service
 	dh_installsystemd --restart-after-upgrade
