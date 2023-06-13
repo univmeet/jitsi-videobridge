@@ -1,10 +1,9 @@
-jvb/target/dependency/*		usr/share/jitsi-videobridge/lib
-jvb/lib/videobridge.rc		usr/share/jitsi-videobridge/lib
-jvb/lib/logging.properties		etc/jitsi/videobridge
-jitsi-videobridge.jar		usr/share/jitsi-videobridge
-jvb/resources/jvb.sh	usr/share/jitsi-videobridge
-resources/graceful_shutdown.sh	usr/share/jitsi-videobridge
-resources/collect-dump-logs.sh	usr/share/jitsi-videobridge
-
-jitsi-videobridge			etc/logrotate.d
-config/20-jvb-udp-buffers.conf		etc/sysctl.d
+config/20-jvb-udp-buffers.conf   etc/sysctl.d
+jitsi-videobridge                etc/logrotate.d
+jvb/lib/logging.properties       etc/jitsi/videobridge
+jvb/lib/videobridge.rc           usr/share/jitsi-videobridge/lib
+jvb/target/dependency/*          usr/share/jitsi-videobridge/lib
+jvb/resources/jvb.sh             usr/share/jitsi-videobridge
+resources/graceful_shutdown.sh   usr/share/jitsi-videobridge
+resources/collect-dump-logs.sh   usr/share/jitsi-videobridge
+jitsi-videobridge.jar            usr/share/jitsi-videobridge
